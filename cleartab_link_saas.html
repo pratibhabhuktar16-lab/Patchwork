@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ClearTab — Smart Link & Reading Inbox</title>
+<style>
+:root{--bg:#f4f6f8;--card:#fff;--ink:#19242f;--muted:#73808c;--line:#e4e9ee;--teal:#087f8c;--mint:#dff6f2;--shadow:0 12px 30px #2035420a}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 Inter,system-ui,-apple-system,Segoe UI,sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer;border:0}
+.app{display:grid;grid-template-columns:225px minmax(0,1fr);min-height:100vh;max-width:1500px;margin:auto}
+aside{background:#fff;border-right:1px solid var(--line);padding:25px 15px;display:flex;flex-direction:column;gap:27px}
+.brand{display:flex;align-items:center;gap:10px;font-size:20px;font-weight:850;letter-spacing:-.7px;padding:0 9px}.logo{width:35px;height:35px;border-radius:12px;background:#087f8c;color:#fff;display:grid;place-items:center;font-size:19px}
+.navlabel{font-size:10px;font-weight:800;letter-spacing:1.4px;color:#9ba5b0;padding:0 12px;margin-bottom:8px}.nav{width:100%;display:flex;align-items:center;gap:11px;text-align:left;padding:11px 12px;border-radius:10px;color:#6b7885;background:transparent;margin:3px 0}.nav span{width:20px;text-align:center;font-size:17px}.nav.active,.nav:hover{background:var(--mint);color:var(--teal);font-weight:750}
+.sidehint{margin-top:auto;background:#f0fbf9;border:1px solid #d9f1ed;border-radius:14px;padding:15px}.sidehint b{font-size:13px}.sidehint p{font-size:12px;color:#748a8b;margin:5px 0 0}
+main{padding:30px clamp(18px,4vw,48px);min-width:0}.top{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:26px}.eyebrow{font-size:11px;font-weight:800;letter-spacing:1.4px;color:var(--teal)}h1{font-size:29px;letter-spacing:-1.1px;margin:4px 0}.sub{color:var(--muted);font-size:13px}.date{font-size:12px;color:#687583;background:white;border:1px solid var(--line);padding:9px 12px;border-radius:10px}
+.hero{background:linear-gradient(115deg,#12343b,#087f8c 70%,#21a79e);border-radius:21px;padding:28px 30px;color:white;display:flex;justify-content:space-between;align-items:center;gap:20px;position:relative;overflow:hidden}.hero:after{content:"";position:absolute;width:240px;height:240px;border:1px solid #ffffff25;border-radius:50%;right:12%;top:-130px;box-shadow:0 0 0 30px #ffffff08,0 0 0 60px #ffffff07}.hero h2{margin:0 0 7px;font-size:24px;letter-spacing:-.7px}.hero p{margin:0;color:#d1efeb;max-width:520px;font-size:14px}.hero button{z-index:1;white-space:nowrap;background:#fff;color:#087f8c;padding:12px 15px;border-radius:10px;font-weight:800}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin:18px 0 22px}.stat{background:#fff;border:1px solid var(--line);border-radius:15px;padding:16px 19px;box-shadow:var(--shadow)}.statlabel{font-size:11px;color:var(--muted);font-weight:800;display:flex;justify-content:space-between}.statnum{font-size:27px;font-weight:850;letter-spacing:-1px;margin-top:7px}.statnote{font-size:11px;color:#9aa4ae}
+.layout{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(265px,.8fr);gap:18px;align-items:start}.panel{background:white;border:1px solid var(--line);border-radius:17px;padding:21px;box-shadow:var(--shadow)}.panelhead{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:17px}.panel h3{font-size:17px;margin:0;letter-spacing:-.4px}.small{font-size:11px;color:var(--muted)}
+form.add{display:flex;gap:8px;margin-bottom:14px}input,select,textarea{border:1px solid var(--line);background:#fbfcfd;border-radius:10px;padding:11px 12px;outline:none;color:var(--ink);min-width:0}input:focus,textarea:focus,select:focus{border-color:#6fc6c3;box-shadow:0 0 0 3px #e5f8f5}form.add input{flex:1;width:40px}.btn{background:var(--teal);color:white;padding:11px 14px;border-radius:10px;font-weight:800}.btn:hover{background:#076b76}.secondary{background:#fff;border:1px solid var(--line);color:#667582;border-radius:9px;padding:8px 11px;font-weight:700;font-size:12px}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}.chip{padding:7px 11px;border-radius:8px;background:transparent;color:#7c8792;font-size:12px}.chip.active{background:var(--mint);color:var(--teal);font-weight:800}
+.items{display:flex;flex-direction:column;gap:8px}.item{border:1px solid var(--line);border-radius:12px;padding:12px;display:flex;gap:10px;align-items:flex-start}.item:hover{border-color:#b8e2dc}.itembody{flex:1;min-width:0}.itemtitle{font-weight:750;overflow-wrap:anywhere}.itemurl{font-size:11px;color:#80909a;overflow-wrap:anywhere;margin-top:3px}.itemnotes{font-size:12px;color:#6c7884;margin-top:6px;white-space:pre-wrap;overflow-wrap:anywhere}.tag{display:inline-block;margin-top:7px;padding:3px 7px;background:#f0f5f6;border-radius:6px;font-size:10px;color:#6b7b83;font-weight:800}.done .itemtitle{text-decoration:line-through;color:#9ba5af}.done .check{background:var(--teal);color:white;border-color:var(--teal)}.check{flex-shrink:0;width:19px;height:19px;border:1.5px solid #cad4dc;border-radius:6px;background:white;color:white;display:grid;place-items:center;padding:0;margin-top:2px}.actions{display:flex;gap:5px;align-items:center}.iconbtn{background:transparent;color:#9aa6b0;padding:3px 5px;font-size:16px}.iconbtn:hover{color:#c24f45}.empty{text-align:center;padding:28px 8px;color:var(--muted);font-size:13px}.empty .symbol{font-size:28px;color:#7bc9c0;margin-bottom:4px}
+.formstack{display:flex;flex-direction:column;gap:9px}.formstack input,.formstack select,.formstack textarea{width:100%}.formstack textarea{min-height:78px;resize:vertical}.formstack .btn{width:100%}.reader-tip{margin-top:16px;background:#f0fbf9;border:1px solid #d9f1ed;border-radius:12px;padding:13px;display:flex;gap:9px}.reader-tip strong{font-size:12px}.reader-tip p{font-size:11px;color:#728988;margin:3px 0 0}
+.result{margin-top:12px;border:1px solid var(--line);border-radius:11px;padding:12px;display:none}.result strong{font-size:13px}.result p{font-size:12px;color:#687784;white-space:pre-wrap;overflow-wrap:anywhere}.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#19242f;color:#fff;border-radius:10px;padding:11px 16px;font-size:13px;display:none;z-index:10;box-shadow:0 8px 30px #0002}.footer{text-align:center;font-size:11px;color:#a1aab4;margin-top:24px}
+@media(max-width:850px){.app{grid-template-columns:1fr}aside{padding:12px 15px;gap:12px;border-right:0;border-bottom:1px solid var(--line)}.navgroup{display:flex;overflow:auto;gap:3px}.navlabel,.sidehint{display:none}.nav{width:auto;white-space:nowrap;padding:9px 12px}.nav span{width:auto}main{padding:22px 15px}.layout{grid-template-columns:1fr}.hero{padding:23px}.stats{gap:8px}.stat{padding:13px}}
+@media(max-width:480px){h1{font-size:24px}.top{align-items:flex-start}.date{font-size:10px;padding:8px}.hero{flex-direction:column;align-items:flex-start}.hero h2{font-size:21px}.stats{grid-template-columns:1fr 1fr}.stat:last-child{grid-column:span 2}form.add{flex-wrap:wrap}form.add input{flex-basis:100%;width:100%}form.add .btn{width:100%}.panel{padding:15px}}
+</style></head>
+<body><div class="app">
+<aside><div class="brand"><div class="logo">↗</div> ClearTab</div>
+<div class="navgroup"><div style="width:100%"><div class="navlabel">YOUR LIBRARY</div>
+<button class="nav active" data-view="all"><span>▤</span> All saved</button><button class="nav" data-view="unread"><span>◷</span> To read</button><button class="nav" data-view="read"><span>✓</span> Finished</button><button class="nav" data-view="favorites"><span>♡</span> Favorites</button></div></div>
+<div class="sidehint"><b>Save it now. Read it later.</b><p>A tidy home for useful links, tutorials, videos and ideas you don't want to lose.</p></div></aside>
+<main><header class="top"><div><div class="eyebrow">YOUR PERSONAL LINK LIBRARY</div><h1>Keep the good stuff.</h1><div class="sub">Save useful links. Add context. Find them when you need them.</div></div><div class="date" id="date"></div></header>
+<section class="hero"><div><h2>Your brain isn't a bookmark manager.</h2><p>Collect articles, tutorials, videos and resources in one searchable place — with your own notes attached.</p></div><button id="jumpAdd">＋ Save a link</button></section>
+<section class="stats"><div class="stat"><div class="statlabel">SAVED LINKS <span>↗</span></div><div class="statnum" id="countAll">0</div><div class="statnote">Your personal knowledge library</div></div><div class="stat"><div class="statlabel">TO READ <span>◷</span></div><div class="statnum" id="countUnread">0</div><div class="statnote">Worth coming back to</div></div><div class="stat"><div class="statlabel">FINISHED <span>✓</span></div><div class="statnum" id="countRead">0</div><div class="statnote">Knowledge collected, one link at a time</div></div></section>
+<section class="layout"><div class="panel"><div class="panelhead"><div><h3 id="listTitle">Your saved links</h3><div class="small">Search your library or filter by status.</div></div><button class="secondary" id="exportBtn">Export JSON</button></div>
+<input id="search" placeholder="⌕  Search titles, URLs or notes..." aria-label="Search saved links" style="width:100%;margin-bottom:13px">
+<div class="chips"><button class="chip active" data-filter="all">Everything</button><button class="chip" data-filter="unread">To read</button><button class="chip" data-filter="read">Finished</button></div>
+<div class="items" id="items"></div></div>
+<div class="panel" id="addPanel"><div class="panelhead"><div><h3>Save a new link</h3><div class="small">Capture it before you forget.</div></div><span style="font-size:22px;color:#087f8c">＋</span></div>
+<form class="formstack" id="saveForm"><input id="url" type="url" placeholder="https://example.com/article" required aria-label="URL"><input id="title" maxlength="120" placeholder="Give it a useful title" aria-label="Link title" required><select id="category"><option>Article</option><option>Video</option><option>Tutorial</option><option>Tool</option><option>Research</option><option>Inspiration</option><option>Other</option></select><textarea id="notes" maxlength="1200" placeholder="Why did you save it? Add a quick note..." aria-label="Notes"></textarea><button class="btn" type="submit">＋ Save to library</button></form>
+<div class="reader-tip"><div style="font-size:19px">✦</div><div><strong>Make future-you grateful.</strong><p>A short note about why a link matters makes it much easier to use later.</p></div></div>
+</div></section><div class="footer">ClearTab • Your saved links stay in this browser • Export a backup anytime</div></main></div><div class="toast" id="toast"></div>
+<script>
+const $=s=>document.querySelector(s), KEY='cleartab_library_v1';let links=[];try{links=JSON.parse(localStorage.getItem(KEY)||'[]')}catch(e){}
+let view='all',filter='all';
+$('#date').textContent=new Date().toLocaleDateString(undefined,{weekday:'short',month:'short',day:'numeric'});
+function persist(){try{localStorage.setItem(KEY,JSON.stringify(links))}catch(e){toast('Browser storage is full. Export your links for backup.')}}
+function toast(s){const el=$('#toast');el.textContent=s;el.style.display='block';clearTimeout(toast.t);toast.t=setTimeout(()=>el.style.display='none',2300)}
+function safeHost(url){try{return new URL(url).hostname.replace(/^www\./,'')}catch{return url}}
+function render(){
+ const q=$('#search').value.trim().toLowerCase();
+ let shown=links.filter(x=>(view==='all'||(view==='unread'&&!x.read)||(view==='read'&&x.read)||(view==='favorites'&&x.favorite))&&(filter==='all'||(filter==='unread'&&!x.read)||(filter==='read'&&x.read))&&(!q||(x.title+' '+x.url+' '+x.notes+' '+x.category).toLowerCase().includes(q)));
+ $('#items').replaceChildren();
+ if(!shown.length){const empty=document.createElement('div');empty.className='empty';empty.innerHTML='<div class="symbol">↗</div><strong>Your library is ready</strong><div>Save a link using the form, and it will appear here.</div>';$('#items').append(empty)}
+ shown.forEach(x=>{
+  const row=document.createElement('div');row.className='item'+(x.read?' done':'');
+  const check=document.createElement('button');check.className='check';check.textContent=x.read?'✓':'';check.title=x.read?'Mark to read':'Mark finished';check.onclick=()=>{x.read=!x.read;persist();render();toast(x.read?'Marked as finished':'Moved back to to read')};
+  const body=document.createElement('div');body.className='itembody';
+  const title=document.createElement('div');title.className='itemtitle';title.textContent=x.title;
+  const url=document.createElement('div');url.className='itemurl';url.textContent=safeHost(x.url)+' · '+x.url;
+  const tag=document.createElement('span');tag.className='tag';tag.textContent=x.category;
+  body.append(title,url,tag);if(x.notes){const n=document.createElement('div');n.className='itemnotes';n.textContent=x.notes;body.append(n)}
+  const actions=document.createElement('div');actions.className='actions';
+  const open=document.createElement('button');open.className='iconbtn';open.textContent='↗';open.title='Open link';open.onclick=()=>window.open(x.url,'_blank','noopener,noreferrer');
+  const fav=document.createElement('button');fav.className='iconbtn';fav.textContent=x.favorite?'♥':'♡';fav.title='Toggle favorite';fav.onclick=()=>{x.favorite=!x.favorite;persist();render()};
+  const del=document.createElement('button');del.className='iconbtn';del.textContent='×';del.title='Delete';del.onclick=()=>{links=links.filter(a=>a.id!==x.id);persist();render();toast('Link removed')};
+  actions.append(open,fav,del);row.append(check,body,actions);$('#items').append(row)
+ });
+ $('#countAll').textContent=links.length;$('#countUnread').textContent=links.filter(x=>!x.read).length;$('#countRead').textContent=links.filter(x=>x.read).length;
+ $('#listTitle').textContent={all:'Your saved links',unread:'Links to read',read:'Finished links',favorites:'Your favorites'}[view];
+ document.querySelectorAll('[data-view]').forEach(b=>b.classList.toggle('active',b.dataset.view===view));document.querySelectorAll('[data-filter]').forEach(b=>b.classList.toggle('active',b.dataset.filter===filter));
+}
+$('#saveForm').addEventListener('submit',e=>{e.preventDefault();const url=$('#url').value.trim(),title=$('#title').value.trim();if(!url||!title)return;links.unshift({id:Date.now()+Math.random(),url,title,category:$('#category').value,notes:$('#notes').value.trim(),read:false,favorite:false,created:new Date().toISOString()});persist();$('#saveForm').reset();view='all';filter='all';$('#search').value='';render();toast('Saved to your library!')});
+document.querySelectorAll('[data-view]').forEach(b=>b.onclick=()=>{view=b.dataset.view;render()});document.querySelectorAll('[data-filter]').forEach(b=>b.onclick=()=>{filter=b.dataset.filter;render()});$('#search').addEventListener('input',render);
+$('#jumpAdd').onclick=()=>{$('#addPanel').scrollIntoView({behavior:'smooth',block:'center'});$('#url').focus()};
+$('#exportBtn').onclick=()=>{const blob=new Blob([JSON.stringify(links,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='cleartab-links-backup.json';a.click();URL.revokeObjectURL(a.href);toast('Backup exported')};
+render();
+</script></body></html>
